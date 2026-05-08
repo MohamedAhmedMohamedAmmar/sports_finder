@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Training Sessions - SportFinder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/my-listings.css}"/>
+</head>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <div class="listings-container">
+        <div class="listings-header">
+            <h1>My Training Sessions</h1>
+            <p>Manage your sessions and trainee booking requests.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;gap:1rem;flex-wrap:wrap;">
+                <a href="/trainings/create" class="btn-create">+ Create New Session</a>
+                <a href="/logout" style="background:#8a1f17;color:white;padding:.7rem 1.4rem;border-radius:8px;text-decoration:none;font-weight:700;">Logout</a>
+            </div>
+        </div>
+
+        <div th:if="${success}" style="background:#d4edda;color:#155724;padding:12px;border-radius:6px;margin-bottom:1rem;" th:text="${success}"></div>
+        <div th:if="${error}"   style="background:#f8d7da;color:#721c24;padding:12px;border-radius:6px;margin-bottom:1rem;" th:text="${error}"></div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card"><div><h3 th:text="${#lists.size(trainings)}">0</h3><p>Training Sessions</p></div></div>
+            <div class="stat-card"><div><h3 th:text="${#lists.size(bookings)}">0</h3><p>Total Bookings</p></div></div>
+            <div class="stat-card"><div>
+                <h3>EGP <span th:text="${#numbers.formatDecimal(totalEarnings,1,2)}">0.00</span></h3>
+                <p>Total Earnings</p>
+            </div></div>
+        </div>
+
+        <!-- Sessions Table -->
+        <div class="listings-table">
+            <div class="table-header"><h2>Your Training Sessions</h2></div>
+            <table>
+                <thead>
+                    <tr><th>Training</th><th>Sport</th><th>Level</th><th>Price/hr</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(trainings)}">
+                        <td colspan="6">No sessions yet. <a href="/trainings/create">Create your first session</a>.</td>
+                    </tr>
+                    <tr th:each="t : ${trainings}">
+                        <td><strong th:text="${t.name}">Name</strong><br/><small th:text="${t.specialty ?: '-'}">Specialty</small></td>
+                        <td th:text="${t.sport?.sportName ?: '-'}">Sport</td>
+                        <td th:text="${t.level}">Level</td>
+                        <td>EGP <span th:text="${#numbers.formatDecimal(t.pricePerHour,1,2)}">0</span></td>
+                        <td th:text="${t.status}">Status</td>
+                        <td>
+                            <a th:href="@{/sessions/{id}(id=${t.id})}"
+                               style="background:#008CBA;color:white;padding:5px 10px;border-radius:4px;text-decoration:none;font-size:.85rem;">View</a>
+                            <form th:action="@{/trainings/delete/{id}(id=${t.id})}" method="post"
+                                  style="display:inline;" onsubmit="return confirm('Delete this training?')">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <button type="submit"
+                                        style="background:#e74c3c;color:white;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;font-size:.85rem;margin-left:4px;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Booking Requests -->
+        <div class="recent-bookings">
+            <h2>Booking Requests</h2>
+            <div class="bookings-list">
+                <div th:if="${#lists.isEmpty(bookings)}" class="booking-item">
+                    <div class="booking-info"><h4>No booking requests yet</h4><p>When trainees submit requests, they will appear here.</p></div>
+                </div>
+
+                <div class="booking-item" th:each="booking : ${bookings}">
+                    <div class="booking-info">
+                        <h4>
+                            <span th:text="${booking.trainee.fullName}">Trainee</span>
+                            &mdash; <span th:text="${booking.training.name}">Training</span>
+                        </h4>
+                        <p>
+                            <span th:text="${booking.preferredDate}">Date</span> at
+                            <span th:text="${booking.preferredTime}">Time</span>
+                        </p>
+                        <small>
+                            Sessions: <span th:text="${booking.sessionsCount ?: '-'}">-</span> |
+                            Level: <span th:text="${booking.levelRequested ?: '-'}">-</span> |
+                            Total: EGP <span th:text="${booking.totalPrice != null ? #numbers.formatDecimal(booking.totalPrice,1,2) : '0.00'}">0</span>
+                        </small>
+                        <div th:if="${booking.message != null and !booking.message.isBlank()}"
+                             style="margin-top:6px;font-size:.85rem;color:#555;">
+                            Message: <span th:text="${booking.message}">Message</span>
+                        </div>
+                        <div th:if="${booking.coachNote != null and !booking.coachNote.isBlank()}"
+                             style="margin-top:4px;font-size:.85rem;color:#1b4f9c;">
+                            Coach Note: <span th:text="${booking.coachNote}">Note</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-status">
+                        <span class="status-badge" th:classappend="${booking.statusClass}" th:text="${booking.status}">Status</span>
+                    </div>
+
+                    <div class="booking-actions">
+                        <form th:if="${'Pending'.equals(booking.status)}"
+                              th:action="@{/my-trainings/booking/{id}/accept(id=${booking.id})}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn-action btn-accept">Accept</button>
+                        </form>
+                        <form th:if="${'Pending'.equals(booking.status)}"
+                              th:action="@{/my-trainings/booking/{id}/decline(id=${booking.id})}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn-action btn-decline">Decline</button>
+                        </form>
+                        <form th:if="${'Accepted'.equals(booking.status)}"
+                              th:action="@{/my-trainings/booking/{id}/cancel(id=${booking.id})}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn-action btn-cancel">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .btn-action{padding:.5rem 1rem;border:none;border-radius:4px;cursor:pointer;font-weight:600;font-size:.85rem;}
+        .btn-accept{background:#27ae60;color:white;} .btn-decline{background:#e74c3c;color:white;} .btn-cancel{background:#95a5a6;color:white;}
+        .status-declined{background:#fdecea;color:#8a1f17;} .status-cancelled{background:#ececec;color:#555;}
+    </style>
+</body>
+</html>

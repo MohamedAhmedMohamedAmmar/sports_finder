@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Training Session - SportFinder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/create.css}"/>
+</head>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <div class="create-container">
+        <div class="create-header">
+            <h1>&#43; Create Training Session</h1>
+            <p>Share your expertise and connect with athletes</p>
+        </div>
+
+        <div class="create-wrapper">
+            <div th:if="${error}" style="background:#f8d7da;color:#721c24;padding:12px;border-radius:4px;margin-bottom:1.5rem;border:1px solid #f5c6cb;" th:text="${error}"></div>
+
+            <form th:action="@{/trainings/create}" method="post" th:object="${trainingForm}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <!-- Basic Info -->
+                <div class="form-section">
+                    <h2>Basic Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Session Name *</label>
+                            <input type="text" th:field="*{name}" placeholder="e.g. Advanced Tennis Coaching"/>
+                            <div style="color:#e74c3c;font-size:.85rem;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Sport *</label>
+                            <select th:field="*{sportId}">
+                                <option value="">-- Select Sport --</option>
+                                <option th:each="sport : ${sports}" th:value="${sport.id}" th:text="${sport.sportName}">Sport</option>
+                            </select>
+                            <div style="color:#e74c3c;font-size:.85rem;" th:if="${#fields.hasErrors('sportId')}" th:errors="*{sportId}"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Level *</label>
+                            <select th:field="*{level}">
+                                <option value="">-- Select Level --</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Professional">Professional</option>
+                                <option value="All Levels">All Levels</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Specialty *</label>
+                            <input type="text" th:field="*{specialty}" placeholder="e.g. Serve Technique"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price per Hour (EGP) *</label>
+                            <input type="number" th:field="*{pricePerHour}" step="0.01" min="0.01"/>
+                            <div style="color:#e74c3c;font-size:.85rem;" th:if="${#fields.hasErrors('pricePerHour')}" th:errors="*{pricePerHour}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Years of Experience</label>
+                            <input type="number" th:field="*{yearsExperience}" min="0"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description & Goals -->
+                <div class="form-section">
+                    <h2>Session Content</h2>
+                    <div class="form-group">
+                        <label>Description * <small style="font-weight:400;color:#999;">(min 20 characters)</small></label>
+                        <textarea th:field="*{description}" rows="4" placeholder="Describe your training session in detail..."></textarea>
+                        <div style="color:#e74c3c;font-size:.85rem;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Training Goals * <small style="font-weight:400;color:#999;">(min 10 characters)</small></label>
+                        <textarea th:field="*{goals}" rows="3" placeholder="What will trainees achieve?"></textarea>
+                        <div style="color:#e74c3c;font-size:.85rem;" th:if="${#fields.hasErrors('goals')}" th:errors="*{goals}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Equipment Provided</label>
+                            <input type="text" th:field="*{equipment}" placeholder="e.g. Rackets, Balls"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Requirements</label>
+                            <input type="text" th:field="*{requirements}" placeholder="e.g. Athletic shoes required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule & Location -->
+                <div class="form-section">
+                    <h2>Schedule &amp; Location</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Session Start Time</label>
+                            <input type="time" th:field="*{startTime}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Session End Time</label>
+                            <input type="time" th:field="*{endTime}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Minimum Sessions *</label>
+                            <input type="number" th:field="*{minSessions}" min="1" value="1"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" th:field="*{location}" placeholder="e.g. Cairo Sports Club"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Days</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label" th:each="day : ${ {'Mon','Tue','Wed','Thu','Fri','Sat','Sun'} }">
+                                <input type="checkbox" name="availability" th:value="${day}"/>
+                                <span th:text="${day}">Day</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credentials -->
+                <div class="form-section">
+                    <h2>Credentials &amp; Media</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Certifications</label>
+                            <input type="text" th:field="*{certifications}" placeholder="e.g. ITF Certified, ATP Coach"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Achievements</label>
+                            <input type="text" th:field="*{achievements}" placeholder="e.g. National Champion 2020"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="url" th:field="*{imageUrl}" placeholder="https://..."/>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">&#127942; Create Training Session</button>
+                    <a href="/my-trainings" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="nav">
+    <a href="/" style="text-decoration:none;color:white;font-weight:bold;font-size:1.3rem;">
+        &#9917; SportFinder
+    </a>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/browse">Browse Courts</a></li>
+        <li><a href="/browse-sessions">Browse Sessions</a></li>
+    </ul>
+    <ul>
+        <!-- Court Owner -->
+        <li sec:authorize="hasRole('COURT_OWNER')">
+            <a href="/my-courts">My Courts</a>
+        </li>
+        <li sec:authorize="hasRole('COURT_OWNER')">
+            <a href="/owner/profile">Profile</a>
+        </li>
+        <!-- Coach -->
+        <li sec:authorize="hasRole('COACH')">
+            <a href="/my-trainings">My Trainings</a>
+        </li>
+        <li sec:authorize="hasRole('COACH')">
+            <a href="/coach/profile">Profile</a>
+        </li>
+        <!-- Trainee profile -->
+        <li sec:authorize="hasRole('TRAINEE')">
+            <a href="/profile">Profile</a>
+        </li>
+        <!-- Logout for any logged-in user -->
+        <li sec:authorize="isAuthenticated()">
+            <form action="/logout" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit"
+                        style="background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.5);padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:700;">
+                    Logout
+                </button>
+            </form>
+        </li>
+        <!-- Login / Signup for guests -->
+        <li sec:authorize="isAnonymous()">
+            <a href="/login">Login</a>
+        </li>
+        <li sec:authorize="isAnonymous()">
+            <a href="/signup"
+               style="background:rgba(255,255,255,.2);padding:6px 14px;border-radius:6px;">Sign Up</a>
+        </li>
+    </ul>
+
+    <style>
+        nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;flex-wrap:wrap;
+            box-shadow:0 4px 12px rgba(0,0,0,.1);}
+        nav ul{display:flex;gap:1.2rem;list-style:none;margin:0;padding:0;align-items:center;}
+        nav li a{color:#fff;text-decoration:none;font-weight:500;transition:all .3s;padding-bottom:.3rem;}
+        nav li a:hover{border-bottom:3px solid #fff;}
+        @media(max-width:920px){nav{flex-direction:column;gap:.5rem;}
+            nav ul{gap:.8rem;font-size:.9rem;justify-content:center;flex-wrap:wrap;}}
+    </style>
+</nav>
+</body>
+</html>

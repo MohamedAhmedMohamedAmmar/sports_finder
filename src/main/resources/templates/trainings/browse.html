@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Browse Sessions - SportFinder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        .page-header{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:3rem 2rem;text-align:center;}
+        .page-header h1{font-size:2.5rem;margin-bottom:.5rem;}
+        .browse-container{max-width:1200px;margin:2rem auto;padding:0 2rem;}
+        .sessions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:2rem;}
+        .session-card{background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;transition:all .3s;display:flex;flex-direction:column;}
+        .session-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+        .session-img{width:100%;height:180px;object-fit:cover;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:white;font-size:4rem;}
+        .session-body{padding:1.2rem;flex:1;display:flex;flex-direction:column;}
+        .session-body h3{font-size:1.1rem;margin-bottom:.3rem;color:#333;}
+        .coach-name{color:#667eea;font-size:.9rem;font-weight:600;margin-bottom:.5rem;}
+        .badge{padding:.25rem .6rem;border-radius:20px;font-size:.78rem;font-weight:500;display:inline-block;margin:.2rem;}
+        .badge-sport{background:#e8f0fe;color:#667eea;}
+        .badge-level{background:#f3e5f5;color:#7b1fa2;}
+        .session-price{font-size:1.1rem;font-weight:700;color:#667eea;margin:.6rem 0;}
+        .session-meta{color:#666;font-size:.85rem;flex:1;}
+        .btn-view{display:block;margin-top:auto;padding:.7rem;background:linear-gradient(135deg,#667eea,#764ba2);color:white;text-decoration:none;border-radius:8px;text-align:center;font-weight:600;transition:opacity .2s;}
+        .btn-view:hover{opacity:.9;}
+        .no-results{text-align:center;padding:4rem;color:#666;}
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <div class="page-header">
+        <h1>&#127939; Browse Training Sessions</h1>
+        <p>Connect with professional coaches and improve your game</p>
+    </div>
+
+    <div class="browse-container">
+        <div class="sessions-grid" th:if="${not #lists.isEmpty(trainings)}">
+            <div class="session-card" th:each="training : ${trainings}">
+                <div class="session-img" th:if="${training.imageUrl == null or training.imageUrl.isBlank()}">&#127939;</div>
+                <img class="session-img" th:unless="${training.imageUrl == null or training.imageUrl.isBlank()}"
+                     th:src="${training.imageUrl}" th:alt="${training.name}"/>
+
+                <div class="session-body">
+                    <h3 th:text="${training.name}">Session Name</h3>
+                    <p class="coach-name">by <span th:text="${training.coach?.fullName ?: 'Unknown'}">Coach</span></p>
+                    <div>
+                        <span class="badge badge-sport" th:if="${training.sport != null}" th:text="${training.sport.sportName}">Sport</span>
+                        <span class="badge badge-level" th:text="${training.level}">Level</span>
+                    </div>
+                    <p class="session-price">EGP <span th:text="${#numbers.formatDecimal(training.pricePerHour,1,2)}">0</span>/hr</p>
+                    <p class="session-meta" th:if="${training.specialty != null}">
+                        &#127919; <span th:text="${training.specialty}">Specialty</span>
+                    </p>
+                    <p class="session-meta" th:if="${training.location != null}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: inline; margin-right: 0.4rem;">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span th:text="${training.location}">Location</span>
+                    </p>
+                    <a th:href="@{/sessions/{id}(id=${training.id})}" class="btn-view">View &amp; Book</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-results" th:if="${#lists.isEmpty(trainings)}">
+            <p style="font-size:3rem;">&#127939;</p>
+            <h3>No training sessions available yet</h3>
+            <p>Check back soon!</p>
+        </div>
+    </div>
+</body>
+</html>
