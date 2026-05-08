@@ -1,4 +1,4 @@
-package com.sportfinder.async;
+package com.example.sport_finder.async;
 
 import java.util.concurrent.Executor;
 

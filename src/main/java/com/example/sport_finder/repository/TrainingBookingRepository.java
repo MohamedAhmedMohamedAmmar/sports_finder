@@ -1,4 +1,4 @@
-package com.sportfinder.repository;
+package com.example.sport_finder.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sportfinder.model.Training;
-import com.sportfinder.model.TrainingBooking;
-import com.sportfinder.model.User;
+import com.example.sport_finder.model.Training;
+import com.example.sport_finder.model.TrainingBooking;
+import com.example.sport_finder.model.User;
 
 @Repository
 public interface TrainingBookingRepository extends JpaRepository<TrainingBooking, Long> {

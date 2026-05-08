@@ -1,4 +1,4 @@
-package com.sportfinder.service;
+package com.example.sport_finder.service;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,14 +7,14 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sportfinder.dto.CourtForm;
-import com.sportfinder.model.Amenity;
-import com.sportfinder.model.Court;
-import com.sportfinder.model.Sport;
-import com.sportfinder.model.User;
-import com.sportfinder.repository.AmenityRepository;
-import com.sportfinder.repository.CourtRepository;
-import com.sportfinder.repository.SportRepository;
+import com.example.sport_finder.dto.CourtForm;
+import com.example.sport_finder.model.Amenity;
+import com.example.sport_finder.model.Court;
+import com.example.sport_finder.model.Sport;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.repository.AmenityRepository;
+import com.example.sport_finder.repository.CourtRepository;
+import com.example.sport_finder.repository.SportRepository;
 
 import lombok.RequiredArgsConstructor;
 

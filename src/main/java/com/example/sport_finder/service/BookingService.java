@@ -1,4 +1,4 @@
-package com.sportfinder.service;
+package com.example.sport_finder.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,17 +9,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sportfinder.dto.CourtBookingForm;
-import com.sportfinder.dto.TrainingBookingForm;
-import com.sportfinder.model.Court;
-import com.sportfinder.model.CourtBooking;
-import com.sportfinder.model.Training;
-import com.sportfinder.model.TrainingBooking;
-import com.sportfinder.model.User;
-import com.sportfinder.repository.CourtBookingRepository;
-import com.sportfinder.repository.CourtRepository;
-import com.sportfinder.repository.TrainingBookingRepository;
-import com.sportfinder.repository.TrainingRepository;
+import com.example.sport_finder.dto.CourtBookingForm;
+import com.example.sport_finder.dto.TrainingBookingForm;
+import com.example.sport_finder.model.Court;
+import com.example.sport_finder.model.CourtBooking;
+import com.example.sport_finder.model.Training;
+import com.example.sport_finder.model.TrainingBooking;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.repository.CourtBookingRepository;
+import com.example.sport_finder.repository.CourtRepository;
+import com.example.sport_finder.repository.TrainingBookingRepository;
+import com.example.sport_finder.repository.TrainingRepository;
 
 import lombok.RequiredArgsConstructor;
 

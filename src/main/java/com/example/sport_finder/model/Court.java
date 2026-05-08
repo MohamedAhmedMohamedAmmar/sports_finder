@@ -1,4 +1,4 @@
-package com.sportfinder.model;
+package com.example.sport_finder.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

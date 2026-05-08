@@ -1,4 +1,4 @@
-package com.sportfinder.dto;
+package com.example.sport_finder.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

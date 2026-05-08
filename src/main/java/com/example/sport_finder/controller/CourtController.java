@@ -1,4 +1,4 @@
-package com.sportfinder.controller;
+package com.example.sport_finder.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sportfinder.dto.CourtBookingForm;
-import com.sportfinder.dto.CourtForm;
-import com.sportfinder.dto.ProfileUpdateDto;
-import com.sportfinder.model.Court;
-import com.sportfinder.model.User;
-import com.sportfinder.service.BookingService;
-import com.sportfinder.service.CourtService;
-import com.sportfinder.service.EmailService;
-import com.sportfinder.service.UserService;
+import com.example.sport_finder.dto.CourtBookingForm;
+import com.example.sport_finder.dto.CourtForm;
+import com.example.sport_finder.dto.ProfileUpdateDto;
+import com.example.sport_finder.model.Court;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.service.BookingService;
+import com.example.sport_finder.service.CourtService;
+import com.example.sport_finder.service.EmailService;
+import com.example.sport_finder.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

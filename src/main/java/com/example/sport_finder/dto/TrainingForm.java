@@ -1,4 +1,4 @@
-package com.sportfinder.dto;
+package com.example.sport_finder.dto;
 
 import java.math.BigDecimal;
 import java.util.List;

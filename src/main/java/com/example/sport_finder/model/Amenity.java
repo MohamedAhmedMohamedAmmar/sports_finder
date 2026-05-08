@@ -1,4 +1,4 @@
-package com.sportfinder.model;
+package com.example.sport_finder.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

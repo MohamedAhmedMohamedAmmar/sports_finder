@@ -1,4 +1,4 @@
-package com.sportfinder.controller;
+package com.example.sport_finder.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sportfinder.dto.SignupDto;
-import com.sportfinder.model.User;
-import com.sportfinder.service.EmailService;
-import com.sportfinder.service.UserService;
+import com.example.sport_finder.dto.SignupDto;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.service.EmailService;
+import com.example.sport_finder.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

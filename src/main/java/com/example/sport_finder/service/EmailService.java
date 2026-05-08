@@ -1,4 +1,4 @@
-package com.sportfinder.service;
+package com.example.sport_finder.service;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

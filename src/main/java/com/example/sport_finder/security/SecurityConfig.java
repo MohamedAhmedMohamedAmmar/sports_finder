@@ -1,4 +1,4 @@
-package com.sportfinder.security;
+package com.example.sport_finder.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

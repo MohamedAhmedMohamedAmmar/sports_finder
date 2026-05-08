@@ -1,6 +1,6 @@
-package com.sportfinder.repository;
+package com.example.sport_finder.repository;
 
-import com.sportfinder.model.Sport;
+import com.example.sport_finder.model.Sport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

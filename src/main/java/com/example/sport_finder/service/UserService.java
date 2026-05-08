@@ -1,4 +1,4 @@
-package com.sportfinder.service;
+package com.example.sport_finder.service;
 
 import java.time.LocalDate;
 
@@ -6,12 +6,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sportfinder.dto.ProfileUpdateDto;
-import com.sportfinder.dto.SignupDto;
-import com.sportfinder.model.User;
-import com.sportfinder.model.UserProfile;
-import com.sportfinder.repository.UserProfileRepository;
-import com.sportfinder.repository.UserRepository;
+import com.example.sport_finder.dto.ProfileUpdateDto;
+import com.example.sport_finder.dto.SignupDto;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.model.UserProfile;
+import com.example.sport_finder.repository.UserProfileRepository;
+import com.example.sport_finder.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

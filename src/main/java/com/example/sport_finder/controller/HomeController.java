@@ -1,14 +1,16 @@
-package com.sportfinder.controller;
+package com.example.sport_finder.controller;
 
-import com.sportfinder.service.CourtService;
-import com.sportfinder.service.TrainingService;
+import com.example.sport_finder.service.CourtService;
+import com.example.sport_finder.service.TrainingService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor

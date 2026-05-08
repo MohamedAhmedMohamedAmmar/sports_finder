@@ -1,7 +1,7 @@
-package com.sportfinder.security;
+package com.example.sport_finder.security;
 
-import com.sportfinder.model.User;
-import com.sportfinder.repository.UserRepository;
+import com.example.sport_finder.model.User;
+import com.example.sport_finder.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;

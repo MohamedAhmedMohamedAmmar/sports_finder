@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.sportfinder</groupId>
+    <groupId>com.example.sport_finder</groupId>
     <artifactId>sportfinder</artifactId>
     <version>1.0.0</version>
     <name>SportFinder</name>

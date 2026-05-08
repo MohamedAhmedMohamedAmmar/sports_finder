@@ -1,6 +1,6 @@
-package com.sportfinder.repository;
+package com.example.sport_finder.repository;
 
-import com.sportfinder.model.Amenity;
+import com.example.sport_finder.model.Amenity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
