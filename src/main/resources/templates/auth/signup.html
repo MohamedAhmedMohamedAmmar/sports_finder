@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sign Up - SportFinder</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <style>
+        .error-message { color:#e74c3c; font-size:0.85rem; margin-top:0.3rem; display:none; }
+        .error-message.show { display:block; }
+        input.input-error, select.input-error { border-color:#e74c3c !important; background:#ffe6e6; }
+        .form-group { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Join SportFinder</h2>
+
+            <div th:if="${error}"
+                 style="background:#f8d7da;color:#721c24;padding:12px;border-radius:4px;margin-bottom:1rem;border:1px solid #f5c6cb;"
+                 th:text="${error}"></div>
+
+            <form id="signupForm" method="POST" action="/signup"
+                  th:object="${signupDto}" onsubmit="return validateSignup(event)">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="name" name="fullName"
+                           th:field="*{fullName}" required onchange="validateName(this)"/>
+                    <span class="error-message" id="nameError"
+                          th:classappend="${#fields.hasErrors('fullName')} ? 'show'"
+                          th:text="${#fields.hasErrors('fullName')} ? ${#fields.errors('fullName')[0]} : ''"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email"
+                           th:field="*{email}" required onchange="validateEmail(this)"/>
+                    <span class="error-message" id="emailError"
+                          th:classappend="${#fields.hasErrors('email')} ? 'show'"
+                          th:text="${#fields.hasErrors('email')} ? ${#fields.errors('email')[0]} : ''"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                           th:field="*{password}" required onchange="validatePassword(this)"/>
+                    <span class="error-message" id="passwordError"
+                          th:classappend="${#fields.hasErrors('password')} ? 'show'"
+                          th:text="${#fields.hasErrors('password')} ? ${#fields.errors('password')[0]} : ''"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">User Type</label>
+                    <select id="role" name="role" th:field="*{role}"
+                            required onchange="validateRole(this)">
+                        <option value="">Select a user type</option>
+                        <option value="TRAINEE">Trainee</option>
+                        <option value="COACH">Coach</option>
+                        <option value="COURT_OWNER">Court Owner</option>
+                    </select>
+                    <span class="error-message" id="roleError"
+                          th:classappend="${#fields.hasErrors('role')} ? 'show'"
+                          th:text="${#fields.hasErrors('role')} ? ${#fields.errors('role')[0]} : ''"></span>
+                </div>
+
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+
+            <p style="text-align:center;margin-top:1rem;">
+                Already have an account? <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script th:src="@{/js/signUp.js}"></script>
+</body>
+</html>
